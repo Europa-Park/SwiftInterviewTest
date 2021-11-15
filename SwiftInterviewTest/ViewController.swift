@@ -29,71 +29,38 @@ class ViewController: UIViewController {
         return textField
     }()
     
-    lazy var fullNameLabel: UILabel = {
-        
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        return label
-    }()
-    
-    override func loadView() {
-        
-        super.loadView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
         
         view.backgroundColor = UIColor.systemGroupedBackground
         setUpViews()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        firstNameTextField.addTarget(self, action: #selector(self.nameTextChanged(_:)), for: .editingChanged)
-        lastNameTextField.addTarget(self, action: #selector(self.nameTextChanged(_:)), for: .editingChanged)
-    }
-    
     func setUpViews() {
         
-        let topMargin = 100.0
-        let spacing = 20.0
+        var fullNameLabel = UILabel()
+        fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        fullNameLabel.textAlignment = .center
         
         view.addSubview(firstNameTextField)
         view.addSubview(lastNameTextField)
         view.addSubview(fullNameLabel)
         
         NSLayoutConstraint.activate([
-            firstNameTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: spacing),
-            firstNameTextField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -spacing),
-            firstNameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topMargin),
+            firstNameTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            firstNameTextField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            firstNameTextField.topAnchor.constraint(equalTo: view.topAnchor),
             
-            lastNameTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: spacing),
-            lastNameTextField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -spacing),
-            lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: spacing),
+            lastNameTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            lastNameTextField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 20),
+            lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 20),
             
             fullNameLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             fullNameLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            fullNameLabel.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: spacing),
+            fullNameLabel.topAnchor.constraint(equalTo: lastNameTextField.topAnchor, constant: 20),
         
         ])
-    }
-    
-    @objc func nameTextChanged(_ sender: UITextField) {
-        
-        let firstName = firstNameTextField.text ?? ""
-        let lastName = lastNameTextField.text ?? ""
-        var fullName = ""
-        
-        if firstName.count > 0, lastName.count > 0 {
-            
-            fullName = lastName + ", " + firstName
-        }
-        else {
-            
-            fullName = lastName + firstName
-        }
-        
-        fullNameLabel.text = fullName
     }
 
 
